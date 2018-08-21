@@ -1,0 +1,6 @@
+framework module Pods_AmILyingTests {
+  umbrella header "Pods-AmILyingTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
