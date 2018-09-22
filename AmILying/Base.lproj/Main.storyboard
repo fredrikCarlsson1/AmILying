@@ -1244,10 +1244,10 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
             </objects>
             <point key="canvasLocation" x="3042.4000000000001" y="17.733990147783253"/>
         </scene>
-        <!--Game Lobby-->
+        <!--Game Lobby View Controller-->
         <scene sceneID="h9Y-Y7-bv6">
             <objects>
-                <viewController id="foZ-sY-vFv" customClass="GameLobby" customModule="AmILying" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="foZ-sY-vFv" customClass="GameLobbyViewController" customModule="AmILying" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aSS-vM-RAE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1439,7 +1439,7 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A0g-Vs-S0Z">
-                                                            <rect key="frame" x="73" y="28" width="68" height="29.666666666666671"/>
+                                                            <rect key="frame" x="73" y="28" width="68" height="29"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1448,7 +1448,7 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Poins" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ff-ul-BBe">
-                                                            <rect key="frame" x="73" y="65.666666666666671" width="68" height="16.333333333333329"/>
+                                                            <rect key="frame" x="73" y="65" width="68" height="17"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1457,7 +1457,7 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="#1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e0H-IK-cJ7">
-                                                            <rect key="frame" x="122.33333333333331" y="3" width="21" height="20"/>
+                                                            <rect key="frame" x="122.66666666666669" y="3" width="21" height="20"/>
                                                             <fontDescription key="fontDescription" name="Baskerville-Bold" family="Baskerville" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -1534,19 +1534,22 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                                             <rect key="frame" x="0.0" y="0.0" width="150" height="234"/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lag 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3w-LF-wGR">
-                                                            <rect key="frame" x="23.000000000000007" y="10" width="104.66666666666669" height="48"/>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="40"/>
+                                                            <rect key="frame" x="36.000000000000007" y="10" width="78.666666666666686" height="36"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
+                                                            <variation key="heightClass=regular-widthClass=regular">
+                                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="40"/>
+                                                            </variation>
                                                         </label>
                                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="zvM-JR-O87">
-                                                            <rect key="frame" x="10" y="164" width="130" height="60"/>
+                                                            <rect key="frame" x="10" y="154" width="130" height="70"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="60" id="9kV-yb-TnY"/>
+                                                                <constraint firstAttribute="height" constant="70" id="yPg-P4-wNh"/>
                                                             </constraints>
                                                             <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WFU-hB-kYg">
-                                                                <size key="itemSize" width="50" height="50"/>
+                                                                <size key="itemSize" width="60" height="60"/>
                                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1567,18 +1570,16 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                                                                         <subviews>
                                                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nz2-Av-tj9">
                                                                                                 <rect key="frame" x="5" y="5" width="30" height="30"/>
-                                                                                                <constraints>
-                                                                                                    <constraint firstAttribute="width" constant="30" id="8AO-1t-ffE"/>
-                                                                                                    <constraint firstAttribute="height" constant="30" id="foe-kS-YAr"/>
-                                                                                                </constraints>
                                                                                             </imageView>
                                                                                         </subviews>
                                                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                         <constraints>
-                                                                                            <constraint firstItem="nz2-Av-tj9" firstAttribute="centerY" secondItem="gJS-de-9Dr" secondAttribute="centerY" id="BXo-7b-Icc"/>
-                                                                                            <constraint firstAttribute="width" constant="40" id="Ufc-a9-olZ"/>
-                                                                                            <constraint firstAttribute="height" constant="40" id="fnZ-U1-iKE"/>
-                                                                                            <constraint firstItem="nz2-Av-tj9" firstAttribute="centerX" secondItem="gJS-de-9Dr" secondAttribute="centerX" id="vlJ-G3-eb9"/>
+                                                                                            <constraint firstItem="nz2-Av-tj9" firstAttribute="top" secondItem="gJS-de-9Dr" secondAttribute="top" constant="5" id="CXj-yj-shg"/>
+                                                                                            <constraint firstAttribute="width" constant="40" id="FUU-dW-4cf"/>
+                                                                                            <constraint firstAttribute="height" constant="40" id="R9n-7O-r0A"/>
+                                                                                            <constraint firstAttribute="bottom" secondItem="nz2-Av-tj9" secondAttribute="bottom" constant="5" id="tYu-cT-Quf"/>
+                                                                                            <constraint firstAttribute="trailing" secondItem="nz2-Av-tj9" secondAttribute="trailing" constant="5" id="xTX-n8-Idk"/>
+                                                                                            <constraint firstItem="nz2-Av-tj9" firstAttribute="leading" secondItem="gJS-de-9Dr" secondAttribute="leading" constant="5" id="xfo-sY-jma"/>
                                                                                         </constraints>
                                                                                         <userDefinedRuntimeAttributes>
                                                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -1600,30 +1601,30 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                                                                     </view>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jMc-oF-U4J">
                                                                                         <rect key="frame" x="0.0" y="40" width="60" height="20"/>
-                                                                                        <constraints>
-                                                                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="gk3-1t-nZf"/>
-                                                                                        </constraints>
-                                                                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="12"/>
+                                                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="trailing" secondItem="jMc-oF-U4J" secondAttribute="trailing" id="Ab4-qG-WyJ"/>
-                                                                                    <constraint firstItem="gJS-de-9Dr" firstAttribute="top" secondItem="DTe-xs-dR6" secondAttribute="top" id="FAx-xE-gxL"/>
-                                                                                    <constraint firstAttribute="bottom" secondItem="jMc-oF-U4J" secondAttribute="bottom" id="Mj4-Rj-74D"/>
-                                                                                    <constraint firstItem="gJS-de-9Dr" firstAttribute="centerX" secondItem="DTe-xs-dR6" secondAttribute="centerX" id="Xjd-Io-RjK"/>
-                                                                                    <constraint firstItem="jMc-oF-U4J" firstAttribute="leading" secondItem="DTe-xs-dR6" secondAttribute="leading" id="xlG-zN-QHu"/>
+                                                                                    <constraint firstItem="jMc-oF-U4J" firstAttribute="top" secondItem="gJS-de-9Dr" secondAttribute="bottom" id="Cuu-5m-kQm"/>
+                                                                                    <constraint firstAttribute="trailing" secondItem="jMc-oF-U4J" secondAttribute="trailing" id="Gtc-Au-E4X"/>
+                                                                                    <constraint firstItem="gJS-de-9Dr" firstAttribute="leading" secondItem="DTe-xs-dR6" secondAttribute="leading" constant="10" id="PJ9-by-0hD"/>
+                                                                                    <constraint firstItem="jMc-oF-U4J" firstAttribute="top" secondItem="gJS-de-9Dr" secondAttribute="bottom" id="Wab-ro-g9A"/>
+                                                                                    <constraint firstAttribute="trailing" secondItem="gJS-de-9Dr" secondAttribute="trailing" constant="10" id="aA0-Dc-mhy"/>
+                                                                                    <constraint firstItem="gJS-de-9Dr" firstAttribute="top" secondItem="DTe-xs-dR6" secondAttribute="top" id="i0Y-rX-gje"/>
+                                                                                    <constraint firstItem="jMc-oF-U4J" firstAttribute="leading" secondItem="DTe-xs-dR6" secondAttribute="leading" id="lkQ-qT-QLO"/>
+                                                                                    <constraint firstAttribute="bottom" secondItem="jMc-oF-U4J" secondAttribute="bottom" id="nJH-6N-wuo"/>
                                                                                 </constraints>
                                                                             </view>
                                                                         </subviews>
                                                                     </view>
                                                                     <constraints>
-                                                                        <constraint firstItem="DTe-xs-dR6" firstAttribute="top" secondItem="xEy-x5-2Sb" secondAttribute="top" id="8bJ-4e-9WK"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="DTe-xs-dR6" secondAttribute="bottom" id="fib-EJ-0Qa"/>
-                                                                        <constraint firstAttribute="trailing" secondItem="DTe-xs-dR6" secondAttribute="trailing" id="ttv-Vb-zHF"/>
-                                                                        <constraint firstItem="DTe-xs-dR6" firstAttribute="leading" secondItem="xEy-x5-2Sb" secondAttribute="leading" id="wwP-Xw-zoq"/>
+                                                                        <constraint firstItem="DTe-xs-dR6" firstAttribute="top" secondItem="xEy-x5-2Sb" secondAttribute="top" id="Psa-hA-fwh"/>
+                                                                        <constraint firstItem="DTe-xs-dR6" firstAttribute="leading" secondItem="xEy-x5-2Sb" secondAttribute="leading" id="S0D-9Y-byC"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="DTe-xs-dR6" secondAttribute="bottom" id="VgP-xp-owt"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="DTe-xs-dR6" secondAttribute="trailing" id="jRP-pK-2ER"/>
                                                                     </constraints>
                                                                     <size key="customSize" width="60" height="60"/>
                                                                     <connections>
@@ -1639,10 +1640,13 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                                             </connections>
                                                         </collectionView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 poäng" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0g-K8-Qth">
-                                                            <rect key="frame" x="27.333333333333329" y="78" width="96" height="30"/>
+                                                            <rect key="frame" x="27.666666666666671" y="66" width="96" height="30"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="25"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
+                                                            <variation key="heightClass=regular-widthClass=regular">
+                                                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
+                                                            </variation>
                                                         </label>
                                                     </subviews>
                                                     <constraints>
@@ -1820,7 +1824,7 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="RESULTAT" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SS1-Xe-agR">
-                                                                    <rect key="frame" x="160.33333333333334" y="7" width="75.666666666666657" height="20"/>
+                                                                    <rect key="frame" x="160" y="7" width="76" height="20"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -1849,7 +1853,7 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="NameLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VSG-2h-leW">
-                                                                    <rect key="frame" x="46" y="11.333333333333336" width="73" height="17"/>
+                                                                    <rect key="frame" x="46" y="11.666666666666664" width="73" height="17"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -2183,6 +2187,14 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </imageView>
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g7c-0J-YAb">
+                                                <rect key="frame" x="229" y="10" width="40" height="40"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="ExclamationMark"/>
+                                                <connections>
+                                                    <action selector="exclamationMarkButtonInSwipeView:" destination="foZ-sY-vFv" eventType="touchUpInside" id="ThD-6q-YUZ"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -2284,7 +2296,6 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bog-4T-Tp2" customClass="UIButtonX" customModule="AmILying" customModuleProvider="target">
                                         <rect key="frame" x="145" y="116" width="80" height="33"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.16091919930000001" green="0.72027680839999997" blue="0.075630571339999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <state key="normal" title="Ja" backgroundImage="menyknapp">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2317,7 +2328,6 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g43-W4-1DH" customClass="UIButtonX" customModule="AmILying" customModuleProvider="target">
                                         <rect key="frame" x="20" y="116" width="80" height="33"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.85098039219999999" green="0.46274509800000002" blue="0.35294117650000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <state key="normal" title="Avbryt" backgroundImage="button">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2477,7 +2487,7 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                                         <real key="value" value="1"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
-                                        <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="value" red="0.84313725490196079" green="0.46274509803921571" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="1"/>
@@ -2816,6 +2826,7 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
                         <outlet property="swipeLabel" destination="Uei-js-2Ft" id="54P-Sb-qqp"/>
                         <outlet property="swipeUpButton" destination="3l3-8W-qde" id="LkA-IE-VF5"/>
                         <outlet property="swipeView" destination="Gv5-T1-dl5" id="toI-oE-nH0"/>
+                        <outlet property="swipeViewExclamationMark" destination="g7c-0J-YAb" id="Sbi-yc-kFp"/>
                         <outlet property="swipeViewImage" destination="9oL-uz-okP" id="wLb-MK-PHv"/>
                         <outlet property="switchLieButtonOutlet" destination="tK1-VR-Dud" id="iUy-8n-WBY"/>
                         <outlet property="textViewInAlertView" destination="vLq-nQ-YyZ" id="Jdf-jh-mVj"/>
@@ -3311,6 +3322,7 @@ Ta din tid; är det ett påstående som du känner är svårt att ljuga om, för
     </scenes>
     <resources>
         <image name="Angel-icon" width="128" height="128"/>
+        <image name="ExclamationMark" width="256" height="256"/>
         <image name="False" width="712" height="712"/>
         <image name="Förlust" width="1669" height="1476"/>
         <image name="Frågekort_tavla" width="2474" height="1675"/>

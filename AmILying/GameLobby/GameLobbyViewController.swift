@@ -11,7 +11,7 @@ import Firebase
 import AVFoundation
 
 
-class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class GameLobbyViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var GAME_REF: DatabaseReference {
         return Database.database().reference().child("games").child(gameID!).child("game")
@@ -128,7 +128,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     @IBOutlet weak var roundPageIndicator1: UIViewX!
     @IBOutlet weak var roundPageIndicator2: UIViewX!
     
-
+    
     @IBOutlet weak var swipeViewImage: UIImageView!
     
     @IBOutlet weak var readingViewImage: UIImageView!
@@ -141,17 +141,29 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     @IBOutlet weak var topBlurView: UIVisualEffectView!
     @IBOutlet weak var topBlurViewButton: UIButton!
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         prepareToPlay()
         self.observeGameIndex()
-        self.scoreTableView.rowHeight = 40
+        self.scoreTableView.rowHeight = 44
         self.resultTableView.rowHeight = 44
         self.kickPlayerTableView.rowHeight = 44
         self.resultTableView.sectionHeaderHeight = 0
-        setUpTableView()
         
+        if self.numberOfTeams > 0 {
+            setUpTableView()
+        }
         observePlayers {
+            if self.numberOfTeams > 2 {
+                self.multiPlayerSetup()
+                for player in self.allPlayers {
+                    if let _ = player.isHost {
+                        self.setGuessingAndReadingTeam(index: player.team-1)
+                    }
+                }
+            }
             self.sortAllPlayersArrayAfterAnswers()
             self.observingPlayers()
             self.setTotalNumberOfRounds()
@@ -212,7 +224,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         
         if self.numberOfTeams > 0 {
             //OM man är i lag och vinner:
-            if currentUser.team == allTeamsArray[0].teamIndex || allTeamsArray[currentUser.team].points == allTeamsArray[0].points {
+            if currentUser.team-1 == allTeamsArray[0].teamIndex || allTeamsArray[currentUser.team-1].points == allTeamsArray[0].points {
                 return true
             }
                 
@@ -241,7 +253,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     func testAnimation(){
         self.blurView.alpha = 1
-
+        
         if self.numberOfTeams > 0 {
             //OM man är i lag och vinner:
             if isWinner() {
@@ -257,7 +269,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             if isWinner() {
                 self.winAnimation()
             }
-            //Om man är själv och förlorar
+                //Om man är själv och förlorar
             else {
                 self.loseAnimation()
             }
@@ -316,8 +328,8 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         })
     }
     
-
-
+    
+    
     
     @IBOutlet weak var blurViewButtonOutlet: UIButton!
     
@@ -405,7 +417,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         self.countDownLabel.center = CGPoint(x: self.smallResultView1.bounds.midX, y: self.smallResultView1.bounds.midY)
         self.personThatSpokeLabel.center = CGPoint(x: self.smallResultView1.bounds.midX, y: self.smallResultView1.bounds.minY + 30)
         self.resultLabel.center = CGPoint(x: self.smallResultView1.bounds.midX, y: self.smallResultView1.bounds.midY)
-
+        
         
         self.smallResultView2.frame.size = CGSize(width: self.resultView.frame.width * 0.8, height: self.resultView.frame.height -  120)
         self.smallResultView2.center = CGPoint(x: self.resultView.bounds.midX, y: self.resultView.bounds.minY+self.smallResultView2.frame.height*0.5+25)
@@ -425,6 +437,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         self.swipeView.frame.size = CGSize(width: self.view.frame.width * 0.8, height: self.view.frame.height * 0.45)
         self.swipeView.center = CGPoint(x: self.view.center.x, y: self.view.frame.height-100 + self.swipeView.frame.height * 0.5)
         self.viewWithButtonInSwipeView.frame = CGRect(x: self.swipeView.bounds.minX + 2.5, y: self.swipeView.bounds.minY + 5, width: self.swipeView.bounds.width - 5, height: 50)
+        self.swipeViewExclamationMark.frame = CGRect(x: self.viewWithButtonInSwipeView.bounds.maxX - 50, y: 5, width: 40, height: 40)
         self.viewWithButtonInSwipeView.roundCorner(corners: [.topLeft, .topRight], radius: 5)
         self.swipeUpButton.frame = CGRect(x: self.viewWithButtonInSwipeView.bounds.midX-self.swipeUpButton.bounds.width*0.5, y: self.swipeView.bounds.minY+3, width: 44, height: 44)
         self.swipeArrow.frame = CGRect(x: self.viewWithButtonInSwipeView.bounds.midX-self.swipeArrow.bounds.width*0.5, y: self.swipeView.bounds.minY+15, width: 25, height: 20)
@@ -434,7 +447,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         
         self.lieButtonOutlet.frame = CGRect(x: self.answerView.bounds.midX+20, y: self.answerView.bounds.midY - 22, width: self.answerView.bounds.width*0.3, height: self.answerView.bounds.width*0.3)
         self.trueButtonOutlet.frame = CGRect(x: self.answerView.bounds.midX-self.lieButtonOutlet.bounds.width-20, y: self.answerView.bounds.midY - 22, width: self.answerView.bounds.width*0.3, height: self.answerView.bounds.width*0.3)
-
+        
         
         self.readingView.frame = CGRect(x: self.swipeView.bounds.minX + 10, y: self.swipeView.bounds.minX+self.viewWithButtonInSwipeView.bounds.height + self.swipeLabel.bounds.height + 25, width: self.swipeView.bounds.width-20, height: self.swipeView.bounds.height-self.viewWithButtonInSwipeView.bounds.height - self.swipeLabel.bounds.height - 35)
         self.readingTextView.frame = CGRect(x: self.readingView.bounds.minX+5, y: self.readingView.bounds.minY+5, width: self.readingView.frame.width - 10, height: self.readingView.frame.height - 60)
@@ -451,7 +464,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         self.settingsViewImage.frame = CGRect(x: 0, y: 0, width: self.settingsView.frame.width, height: self.settingsView.frame.height)
         self.resumeGameButtonOutlet.frame = CGRect(x: self.settingsView.bounds.minX + self.settingsView.bounds.width * 0.1, y: self.settingsView.bounds.minY + 20 , width: self.settingsView.bounds.width * 0.8, height: 50)
         self.rulesAndTipsOutlet.frame = CGRect(x: self.settingsView.bounds.minX + self.settingsView.bounds.width * 0.1, y: self.settingsView.bounds.minY + 75 , width: self.settingsView.bounds.width * 0.8, height: 50)
-
+        
         self.restartButtonOutlet.frame = CGRect(x: self.settingsView.bounds.minX + self.settingsView.bounds.width * 0.1, y: self.settingsView.bounds.minY + 130 , width: self.settingsView.bounds.width * 0.8, height: 50)
         self.quitGameButtonOutlet.frame = CGRect(x: self.settingsView.bounds.minX + self.settingsView.bounds.width * 0.1, y: self.settingsView.bounds.minY + 185 , width: self.settingsView.bounds.width * 0.8, height: 50)
         self.kickPlayersButtonOutlet.frame = CGRect(x: self.settingsView.bounds.minX + self.settingsView.bounds.width * 0.1, y: self.settingsView.bounds.minY + 240 , width: self.settingsView.bounds.width * 0.8, height: 50)
@@ -470,14 +483,12 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         
         
         //AlertView
-        self.alertViewOutlet.frame.size = CGSize(width: self.view.frame.width * 0.8, height: 180)
+        self.alertViewOutlet.frame.size = CGSize(width: self.view.frame.width * 0.8, height: 260)
         self.alertViewOutlet.center = CGPoint(x: self.view.center.x, y: self.view.frame.midY)
         self.alertViewImage.frame = CGRect(x: self.alertViewOutlet.bounds.minX, y: self.alertViewOutlet.bounds.minY, width: self.alertViewOutlet.frame.width, height: self.alertViewOutlet.frame.height)
-        self.textViewInAlertView.frame = CGRect(x: self.alertViewOutlet.bounds.minX + 15, y: self.alertViewOutlet.bounds.minY + 5, width: self.alertViewOutlet.frame.width - 30, height: 70)
-        self.okInAlertViewButtonOutlet.frame = CGRect(x: self.alertViewOutlet.bounds.midX - self.okInAlertViewButtonOutlet.frame.width*0.5, y: self.alertViewOutlet.bounds.midY, width: self.alertViewOutlet.frame.width * 0.3, height: 44)
-        
+        self.textViewInAlertView.frame = CGRect(x: self.alertViewOutlet.bounds.minX + 15, y: self.alertViewOutlet.bounds.minY + 5, width: self.alertViewOutlet.frame.width - 30, height: 180)
+        self.okInAlertViewButtonOutlet.frame = CGRect(x: self.alertViewOutlet.bounds.midX - self.okInAlertViewButtonOutlet.frame.width*0.5, y: self.alertViewOutlet.bounds.maxY - 59, width: self.alertViewOutlet.frame.width * 0.3, height: 44)
         self.alertViewOutlet.transform = CGAffineTransform(scaleX: 0, y: 0)
-        
         
         //Kick Player View
         self.kickPlayerView.frame.size = CGSize(width: self.view.frame.width * 0.8, height: 250)
@@ -614,11 +625,22 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func sortAllPlayersArrayAfterAnswers() {
         playersThatHaventAnswerd.removeAll()
         
-        for player in allPlayers {
-            if player.index != currentIndex{
-                self.playersThatHaventAnswerd.append(player)
+        if numberOfTeams > 0 {
+            allTeamsArray.sort(by:{$0.teamIndex < $1.teamIndex})
+            if let guessingTeam = self.guessingTeam {
+                for player in allTeamsArray[guessingTeam].team {
+                    self.playersThatHaventAnswerd.append(player)
+                }
+                self.playerAnswerCollectionView.reloadData()
             }
-            self.playerAnswerCollectionView.reloadData()
+        }
+        else {
+            for player in allPlayers {
+                if player.index != currentIndex{
+                    self.playersThatHaventAnswerd.append(player)
+                }
+                self.playerAnswerCollectionView.reloadData()
+            }
         }
     }
     
@@ -633,20 +655,65 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     //En koll som körs varje gång game Observer körs
     var backUpIsNecessary = false
     
+    var multiplayerUpdatingBool = false
+    
+    func multiplayerAnswerEqually() -> Bool {
+        self.allTeamsArray.sort(by:{$0.teamIndex < $1.teamIndex})
+        var trueOrFalse = false
+        let answerToCompare = allTeamsArray[guessingTeam].team[0].answer
+        for (index, player) in allTeamsArray[guessingTeam].team.enumerated() {
+            if player.answer != answerToCompare {
+                trueOrFalse = false
+                break
+            }
+            if index == self.allTeamsArray[guessingTeam].team.count-1 {
+                trueOrFalse = true
+            }
+        }
+        return trueOrFalse
+    }
+    
     func checkIfAllPlayerHasAnswerd() {
-
-        if self.numberOfAnswers == allPlayers.count - 1  {
-            self.swipeDown()
-            self.backUpIsNecessary = false
-            self.allPlayersDidAnswer = true
-            self.allPlayerHasAnswerd()
-            UIView.animate(withDuration: 0.5, delay: 0.1, options: .allowUserInteraction, animations: {
-                self.blurView.alpha = 1
-                self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 0.1)
-            }) { (true) in
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
-                })
+        if numberOfTeams > 0 {
+            self.allTeamsArray.sort(by:{$0.teamIndex < $1.teamIndex})
+            if numberOfAnswers == allTeamsArray[self.guessingTeam].team.count {
+                if multiplayerAnswerEqually() {
+                    self.swipeDown()
+                    self.backUpIsNecessary = false
+                    self.allPlayersDidAnswer = true
+                    self.allPlayerHasAnswerd()
+                    UIView.animate(withDuration: 0.5, delay: 0.1, options: .allowUserInteraction, animations: {
+                        self.blurView.alpha = 1
+                        self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 0.1)
+                    }) { (true) in
+                        UIView.animate(withDuration: 0.5, animations: {
+                            self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+                        })
+                    }
+                }
+                else {
+                    //TODO - Bara de som gissar ska få meddelandet
+                    if self.allTeamsArray[guessingTeam].team.contains(where: { $0.name == self.currentUser.name }) {
+                        backUpIsNecessary = true
+                        self.alert(title: "Svara likadant tack!", message: "!")
+                    }
+                }
+            }
+        }
+        else {
+            if self.numberOfAnswers == allPlayers.count - 1  {
+                self.swipeDown()
+                self.backUpIsNecessary = false
+                self.allPlayersDidAnswer = true
+                self.allPlayerHasAnswerd()
+                UIView.animate(withDuration: 0.5, delay: 0.1, options: .allowUserInteraction, animations: {
+                    self.blurView.alpha = 1
+                    self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 0.1)
+                }) { (true) in
+                    UIView.animate(withDuration: 0.5, animations: {
+                        self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+                    })
+                }
             }
         }
     }
@@ -654,22 +721,56 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     func extraCheckIfAllPlayersHasAnswerd() {
         // EN EXTRA KOLL IFALL TVÅ ANVÄNDARE SVARAR EXAKT SAMTIDIGT
-        if allPlayersDidAnswer == false && backUpIsNecessary == true{
-            self.backUpIsNecessary = false
-            self.swipeDown()
-            self.allPlayersDidAnswer = true
-            self.allPlayerHasAnswerd()
-            UIView.animate(withDuration: 0.5, delay: 0.1, options: .allowUserInteraction, animations: {
-                self.blurView.alpha = 1
-                self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 0.1)
-            }) { (true) in
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
-                })
+        if self.numberOfTeams > 0 {
+            if allPlayersDidAnswer == false && backUpIsNecessary == true{
+                if  multiplayerAnswerEqually() {
+                    self.backUpIsNecessary = false
+                    self.swipeDown()
+                    self.allPlayersDidAnswer = true
+                    self.allPlayerHasAnswerd()
+                    UIView.animate(withDuration: 0.5, delay: 0.1, options: .allowUserInteraction, animations: {
+                        self.blurView.alpha = 1
+                        self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 0.1)
+                    }) { (true) in
+                        UIView.animate(withDuration: 0.5, animations: {
+                            self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+                        })
+                    }
+                    self.swipeViewExclamationMark.isHidden = true
+                }
+                else {
+                    
+                    if self.allTeamsArray[guessingTeam].team.contains(where: { $0.name == self.currentUser.name }) {
+                        backUpIsNecessary = true
+                        self.swipeViewExclamationMark.isHidden = false
+                        self.alertViewVarible = AlertViewChoice.other
+                        self.textViewInAlertView.text = "Lagets medlemmar har givit olika svar. För att komma vidare behöver ni komma överrens om ett gemensamt svar inom laget"
+                        UIView.animate(withDuration: 0.5) {
+                            self.alertViewOutlet.transform = .identity
+                        }
+                    }
+                }
             }
         }
-        
+        else {
+            if allPlayersDidAnswer == false && backUpIsNecessary == true{
+                self.backUpIsNecessary = false
+                self.swipeDown()
+                self.allPlayersDidAnswer = true
+                self.allPlayerHasAnswerd()
+                UIView.animate(withDuration: 0.5, delay: 0.1, options: .allowUserInteraction, animations: {
+                    self.blurView.alpha = 1
+                    self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 0.1)
+                }) { (true) in
+                    UIView.animate(withDuration: 0.5, animations: {
+                        self.resultView.transform = CGAffineTransform.init(scaleX: 1, y: 1)
+                    })
+                }
+            }
+        }
     }
+    
+    
     
     func rightOrWrong() -> Bool? {
         if self.currentIndex != self.currentUser.index {
@@ -704,40 +805,43 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         self.checkIfGameIsOver()
         self.startTimer()
         self.swipeLabel.text = "Väntar på spelledaren..."
-        if let currentReader = currentReader {
+        
+        //LAGSPEL
+        //TODO: - När lagen har svarat
+        if self.numberOfTeams > 0 {
+            self.allTeamsArray.sort(by: {$0.teamIndex < $1.teamIndex})
+            let playerAnswer = self.allTeamsArray[self.guessingTeam].team[0].answer
             if let trueOrFalse = currentReaderLieOrTruth {
-                self.personThatSpokeLabel.text = "\(currentReader)..."
-                if currentReader != self.currentUser!.name {
-                    
-                    if let answer = currentUsersAnswer {
-                        if trueOrFalse {
-                            resultLabel.text = "talade sanning!"
-                            if answer == true {
- 
-                                for player in allPlayers {
-                                    if player.name == currentUser.name{
-                                        PLAYER_REF.child(currentUser.name).child("points").setValue(player.points + 1)
-                                    }
-                                }
-                            }
+                if (playerAnswer == "true" && trueOrFalse == true ) || (playerAnswer == "false" && trueOrFalse == false)  {
+                    //Laget som gissar, gissade rätt
+                    self.allTeamsArray[guessingTeam].points += 1
+                    for player in self.allTeamsArray[guessingTeam].team{
+                        player.points += 1
+                        if isHost{
+                            PLAYER_REF.child(player.name).child("points").setValue(player.points)
                         }
-                            
-                        else {
-                            resultLabel.text = "ljög!"
-                            if answer == true {
-
-                            }
-                            else {
-                                for player in allPlayers {
-                                    if player.name == currentUser.name{
-                                        PLAYER_REF.child(currentUser.name).child("points").setValue(player.points + 1)
-                                    }
-                                }
-                            }
+                    }
+                    
+                }
+                else {
+                    //Laget som gissar, gissade fel
+                    self.allTeamsArray[readingTeam].points += 1
+                    for player in self.allTeamsArray[readingTeam].team{
+                        player.points += 1
+                        if isHost{
+                            PLAYER_REF.child(player.name).child("points").setValue(player.points)
                         }
                     }
                 }
-                    
+                self.personThatSpokeLabel.text = "\(currentReader!)..."
+                if currentReader != self.currentUser!.name {
+                    if trueOrFalse {
+                        resultLabel.text = "talade sanning!"
+                    }
+                    else {
+                        resultLabel.text = "ljög!"
+                    }
+                }
                 else if currentReader == self.currentUser!.name{
                     self.personThatSpokeLabel.text = "Du..."
                     if trueOrFalse {
@@ -745,6 +849,54 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                     }
                     else {
                         self.resultLabel.text = "ljög!"
+                    }
+                }
+            }
+        }
+            //SINGEL-SPEL
+        else {
+            if let currentReader = currentReader {
+                if let trueOrFalse = currentReaderLieOrTruth {
+                    self.personThatSpokeLabel.text = "\(currentReader)..."
+                    if currentReader != self.currentUser!.name {
+                        
+                        if let answer = currentUsersAnswer {
+                            if trueOrFalse {
+                                resultLabel.text = "talade sanning!"
+                                if answer == true {
+                                    
+                                    for player in allPlayers {
+                                        if player.name == currentUser.name{
+                                            PLAYER_REF.child(currentUser.name).child("points").setValue(player.points + 1)
+                                        }
+                                    }
+                                }
+                            }
+                                
+                            else {
+                                resultLabel.text = "ljög!"
+                                if answer == true {
+                                    
+                                }
+                                else {
+                                    for player in allPlayers {
+                                        if player.name == currentUser.name{
+                                            PLAYER_REF.child(currentUser.name).child("points").setValue(player.points + 1)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                        
+                    else if currentReader == self.currentUser!.name{
+                        self.personThatSpokeLabel.text = "Du..."
+                        if trueOrFalse {
+                            self.resultLabel.text = "talade sanning!"
+                        }
+                        else {
+                            self.resultLabel.text = "ljög!"
+                        }
                     }
                 }
             }
@@ -776,26 +928,25 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                     self.resultLabel.alpha = 1
                 }, completion: { (true) in
                     if let rightOrWrongAnswer =
-                    self.rightOrWrong()
+                        self.rightOrWrong()
                     {
-                        if rightOrWrongAnswer { self.tumbsUpOrDownImage.image = UIImage(named: "thumbs-up")
+                        if rightOrWrongAnswer { self.tumbsUpOrDownImage.image = UIImage(named: "rätt")
                         }
                         else {
                             //Bild för fel
-                            self.tumbsUpOrDownImage.image = UIImage(named: "thumbs-down")
+                            self.tumbsUpOrDownImage.image = UIImage(named: "fel")
                         }
-                 
+                        
                     }
                     else {
-                        self.tumbsUpOrDownImage.image = UIImage(named: "sunglasses")
+                        self.tumbsUpOrDownImage.image = nil
                     }
                     UIView.animate(withDuration: 0.8, animations: {
                         self.tumbsUpOrDownImage.alpha = 1
-                        self.tumbsUpOrDownImage.transform = CGAffineTransform(scaleX: 2, y: 2)
+                        self.tumbsUpOrDownImage.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
                     }, completion: { (true) in
-                        UIView.animate(withDuration: 0.5, delay: 0.2, options: .allowUserInteraction, animations: {
+                        UIView.animate(withDuration: 0.8, delay: 0.2, options: .allowUserInteraction, animations: {
                             self.tumbsUpOrDownImage.transform = .identity
-                        }, completion: { (true) in
                             self.tumbsUpOrDownImage.alpha = 0
                         })
                     })
@@ -829,7 +980,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         
     }
     
-
+    
     
     var totalNumberOfRounds = 0
     
@@ -875,7 +1026,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             if(self.numberOfAnswers != 0){ GAME_REF.child("numberOfAnswers").setValue(0)
             }
             GAME_REF.child("index").setValue(newIndex)
-
+            
         }
         //Oavsett om man är spelledare eller ej; utför följande:
         self.roundsPlayed += 1
@@ -907,7 +1058,6 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         self.smallResultView1.alpha = 1
         self.smallResultView2.alpha = 0
         
-        
         self.roundPageIndicator1.backgroundColor = UIColor.yellow
         self.roundPageIndicator1.shadowColor = UIColor.yellow
         self.roundPageIndicator2.backgroundColor = UIColor.lightGray
@@ -915,19 +1065,19 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     
-    func setUpTeamScore() {
-        for team in allTeamsArray {
-            team.points = 0
-        }
-        for player in allTeamsArray[0].team{
-            allTeamsArray[0].points += player.points
-        }
-        
-        for player in allTeamsArray[1].team{
-            allTeamsArray[1].points += player.points
-        }
-        self.resultCollectionView.reloadData()
-    }
+    //    func setUpTeamScore() {
+    //        for team in allTeamsArray {
+    //            team.points = 0
+    //        }
+    //        for player in allTeamsArray[0].team{
+    //            allTeamsArray[0].points += player.points
+    //        }
+    //
+    //        for player in allTeamsArray[1].team{
+    //            allTeamsArray[1].points += player.points
+    //        }
+    //        self.resultCollectionView.reloadData()
+    //    }
     
     
     
@@ -946,7 +1096,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-
+        
         
         if allTeamsArray.count > 0 {
             return allTeamsArray.count
@@ -956,12 +1106,12 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == kickPlayerTableView || tableView == resultTableView {
+        if tableView == kickPlayerTableView {
             return allPlayers.count
         }
         
         if allTeamsArray.count > 0 {
-            return allTeamsArray[section].team.count
+            return 1
         }
         else {
             return allPlayers.count
@@ -976,7 +1126,12 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 cell.teamLabel.text = allTeamsArray[section].teamName
             }
             else {
-                cell.teamLabel.text = "SPELARE"
+                if self.numberOfTeams > 0 {
+                    cell.teamLabel.text = "LAG"
+                }
+                else {
+                    cell.teamLabel.text = "SPELARE"
+                }
                 cell.pointsLabel.text = "GISSNING"
             }
             
@@ -990,10 +1145,19 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == resultTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "resultCell", for: indexPath) as! ResultCell
-            let player = allPlayers[indexPath.row]
-            cell.nameLabel.text = player.name
-            cell.resultLabel.text = "\(player.points) poäng"
-            cell.avatarImageView.image = UIImage(named: player.avatar)
+            
+            if self.numberOfTeams > 0 {
+                let team = allTeamsArray[indexPath.section]
+                cell.nameLabel.text = team.teamName
+                cell.resultLabel.text = "\(team.points) poäng"
+                
+            }
+            else {
+                let player = allPlayers[indexPath.row]
+                cell.nameLabel.text = player.name
+                cell.resultLabel.text = "\(player.points) poäng"
+                cell.avatarImageView.image = UIImage(named: player.avatar)
+            }
             
             return cell
         }
@@ -1016,18 +1180,17 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         let cell = tableView.dequeueReusableCell(withIdentifier: "lobbyCell", for: indexPath) as! GameLobbyTableCell
         
         if self.numberOfTeams > 0 {
-            let player = allTeamsArray[indexPath.section].team[indexPath.row]
-            cell.nameLabel.text = player.name
-            cell.pointsLabel.text = checkIfPlayerIsCorrect(player: player)
-            cell.avatarImage.image = UIImage(named: player.avatar)
-  
+            let team = allTeamsArray[indexPath.section]
+            cell.nameLabel.text = team.teamName
+            if team.team.count != 0 {
+                cell.pointsLabel.text = checkIfPlayerIsCorrect(player: team.team[0])
+            }
+            //cell.avatarImage.image = UIImage(named: player.avatar)
         }
         else {
             let player = allPlayers[indexPath.row]
             cell.nameLabel.text = player.name
-
             cell.pointsLabel.text = checkIfPlayerIsCorrect(player: player)
-            
             cell.avatarImage.image = UIImage(named: player.avatar)
         }
         return cell
@@ -1040,6 +1203,9 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 if player.answer == "TBA"{
                     return "Talade sanning"
                 }
+                else if player.answer == "TBA" && player.index != currentIndex{
+                    return ""
+                }
                 else if player.answer == "true"{
                     return "Rätt!"
                 }
@@ -1051,6 +1217,9 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 if player.answer == "TBA"{
                     return "Ljög!"
                 }
+                else if player.answer == "TBA" && player.index != currentIndex{
+                    return ""
+                }
                 else if player.answer == "true"{
                     return "Fel!"
                 }
@@ -1061,52 +1230,98 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         }
         return ""
     }
-
     
-  
+    
+    
     
     //Loopar fram antal lag i spelet. Indexeras senare i "observePlayers". Användes främst förut när man kunde ha fler än 2 lag
     func setUpTableView(){
+        
         if let number = self.numberOfTeams{
             for i in 0..<number {
                 let teamName = "Team \(i+1)"
                 let array = [Player]()
                 let team = AllTeams(teamIndex: i+1, teamName: teamName, points: 0, team: array)
                 self.allTeamsArray.append(team)
-                self.allTeamsArray.sort(by: {$1.points < $0.points})
             }
         }
     }
     
     var indexHandler: UInt = 0
+    var guessingTeam: Int!
+    var readingTeam: Int!
+    
+    
     
     //Observar speländringar i firebase
     func observeGameIndex() {
-
         self.indexHandler = GAME_REF.child("index").observe(.value) { (snapshot) in
             //-------------------
-        
             self.currentIndex = snapshot.value as! Int
             if self.numberOfTeams > 0 {
-                self.setUpTeamScore()
-            }
-            self.updateLabelWithNumberOfRounds()
-            
-            if self.currentIndex == self.currentUser.index {
-                self.swipeLabel.text = "Det är din tur!"
-                self.GAME_REF.child("currentReader").setValue(self.currentUser.name)
-                self.startReading()
-                self.readingView.alpha = 1
-                self.answerView.alpha = 0
+                self.multiPlayerSetup()
             }
             else {
-                self.swipeLabel.text = "Dra uppåt för att svara!"
-                self.readingView.alpha = 0
-                self.answerView.alpha = 1
+                if self.currentIndex == self.currentUser.index {
+                    self.swipeLabel.text = "Det är din tur!"
+                    self.GAME_REF.child("currentReader").setValue(self.currentUser.name)
+                    self.startReading()
+                    self.readingView.alpha = 1
+                    self.answerView.alpha = 0
+                }
+                else {
+                    self.swipeLabel.text = "Dra uppåt för att svara!"
+                    self.readingView.alpha = 0
+                    self.answerView.alpha = 1
+                }
             }
+            self.updateLabelWithNumberOfRounds()
             self.sortAllPlayersArrayAfterAnswers()
         }
         
+    }
+    
+    func multiPlayerSetup() {
+        self.allTeamsArray.sort(by: {$0.teamIndex < $1.teamIndex})
+        if self.allTeamsArray[0].team.contains(where: { $0.index == self.currentIndex }) {
+            if self.currentUser.team == 1 {
+                self.swipeLabel.text = "Din lagkamrat läser"
+                self.readingTeam = 0
+                self.guessingTeam = 1
+                self.readingView.alpha = 0
+                self.answerView.alpha = 0
+            }
+            else {
+                self.readingTeam = 0
+                self.guessingTeam = 1
+                self.swipeLabel.text = "Dra uppåt för att svara"
+                self.readingView.alpha = 0
+                self.answerView.alpha = 1
+            }
+        } else if self.allTeamsArray[1].team.contains(where: { $0.index == self.currentIndex }) {
+            if self.currentUser.team == 2 {
+                self.readingTeam = 1
+                self.guessingTeam = 0
+                self.swipeLabel.text = "Din lagkamrat läser"
+                self.readingView.alpha = 0
+                self.answerView.alpha = 0
+            }
+            else {
+                self.readingTeam = 1
+                self.guessingTeam = 0
+                self.swipeLabel.text = "Dra uppåt för att svara"
+                self.readingView.alpha = 0
+                self.answerView.alpha = 1
+            }
+        }
+        if self.currentIndex == self.currentUser.index {
+            self.swipeLabel.text = "Det är din tur!"
+            self.GAME_REF.child("currentReader").setValue(self.currentUser.name)
+            self.startReading()
+            self.readingView.alpha = 1
+            self.answerView.alpha = 0
+        }
+        //self.setUpTeamScore()
     }
     
     var gameHandler: UInt = 1
@@ -1120,7 +1335,9 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                     if snapshot.childSnapshot(forPath: "numberOfAnswers").value as! Int == 1 {
                         self.backUpIsNecessary = true
                     }
-                     self.checkIfAllPlayerHasAnswerd()
+                    if self.numberOfTeams == 0 {
+                        self.checkIfAllPlayerHasAnswerd()
+                    }
                 }
             }
             
@@ -1141,7 +1358,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 let status = snapshot.childSnapshot(forPath: "gameStatus").value as! String
                 //RESTART GAME
                 if status == "restart" {
-                    self.alertViewVarible = 0
+                    self.alertViewVarible = AlertViewChoice.restart
                     self.textViewInAlertView.text = "Spelledaren har valt att starta om spelet"
                     UIView.animate(withDuration: 0.5, animations: {
                         self.topBlurView.alpha = 1
@@ -1152,7 +1369,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 }
                     //QUIT GAME
                 else if status == "quit"{
-                    self.alertViewVarible = 1
+                    self.alertViewVarible = AlertViewChoice.quit
                     self.textViewInAlertView.text = "Spelledaren har valt att avsluta spelet"
                     UIView.animate(withDuration: 0.5, animations: {
                         self.topBlurView.alpha = 1
@@ -1184,6 +1401,9 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 let index = child.childSnapshot(forPath: "index").value as! Int
                 let player = Player(key: key, name: key, points: points, team: team, answer: answer, avatar: avatar, index: index)
                 var secrets = [String]()
+                if child.childSnapshot(forPath: "isHost").exists() {
+                    player.isHost = true
+                }
                 for childs in [child.childSnapshot(forPath: "secrets")] as [DataSnapshot]{
                     for child2 in childs.children.allObjects{
                         let tja = child2 as! DataSnapshot
@@ -1192,6 +1412,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 }
                 player.secrets = secrets
                 if self.numberOfTeams > 0 {
+                    
                     self.allTeamsArray[team-1].points += points
                     self.allTeamsArray[team-1].team.append(player)
                     self.allTeamsArray.sort(by: {$1.points < $0.points})
@@ -1203,6 +1424,16 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             completion()
         })
         
+    }
+    
+    func setGuessingAndReadingTeam(index: Int) {
+        self.readingTeam = index
+        if index == 0 {
+            self.guessingTeam = 1
+        }
+        else {
+            self.guessingTeam = 0
+        }
     }
     
     var removeHandler: UInt = 3
@@ -1227,7 +1458,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 }
             }
             if snapshot.key == self.currentUser.name {
-                self.alertViewVarible = 2
+                self.alertViewVarible = AlertViewChoice.other
                 self.textViewInAlertView.text = "Spelledaren har sparkat ut dig ur spelet"
                 UIView.animate(withDuration: 0.5, animations: {
                     self.topBlurViewButton.alpha = 1
@@ -1251,7 +1482,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 if snapshot.key != self.currentReader! {
                     for (index, player) in self.allPlayers.enumerated() {
                         if self.isHost {
-                        self.PLAYER_REF.child(player.key).child("index").setValue(index)
+                            self.PLAYER_REF.child(player.key).child("index").setValue(index)
                         }
                         if self.currentUser.name == player.name {
                             self.currentUser.index = index
@@ -1276,10 +1507,10 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                     }
                 }
                 
-
-                if self.numberOfTeams > 0 {
-                    self.setUpTeamScore()
-                }
+                
+                //                if self.numberOfTeams > 0 {
+                //                    self.setUpTeamScore()
+                //                }
                 if newIndex == self.currentIndex {
                     self.currentReader = self.allPlayers[newIndex].name
                     if newIndex == self.currentUser.index {
@@ -1295,7 +1526,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                         self.answerView.alpha = 1
                     }
                     self.sortAllPlayersArrayAfterAnswers()
-
+                    
                 }
                 else {
                     if self.isHost {
@@ -1333,12 +1564,10 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                                     let indexPath : IndexPath = IndexPath(item: index, section: 0)
                                     self.playersThatHaventAnswerd.remove(at: index)
                                     self.playerAnswerCollectionView.deleteItems(at: [indexPath])
-                                    if self.playersThatHaventAnswerd.count == 0 {
-                                        self.extraCheckIfAllPlayersHasAnswerd()
-                                    }
-                                    
                                 }
-                                
+                                if self.playersThatHaventAnswerd.count == 0 {
+                                    self.extraCheckIfAllPlayersHasAnswerd()
+                                }
                             }
                             if self.numberOfTeams > 0 {
                                 self.allTeamsArray.sort(by: {$1.points < $0.points})
@@ -1352,7 +1581,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         }
     }
     
-
+    
     
     
     
@@ -1362,7 +1591,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         randomizeLieOrTruth()
     }
     
-
+    
     func randomizeLieOrTruth(){
         let random = arc4random_uniform(2)
         
@@ -1414,6 +1643,8 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     @IBOutlet weak var swipeArrow: UIImageView!
     @IBOutlet weak var answerView: UIView!
     @IBOutlet weak var swipeLabel: UILabel!
+    @IBOutlet weak var swipeViewExclamationMark: UIButton!
+    
     
     @IBOutlet weak var switchLieButtonOutlet: UIButton!
     
@@ -1423,7 +1654,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             
             
             if self.switchLieButtonOutlet.transform == .identity {
-              
+                
                 self.switchLieButtonOutlet.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
             }
             else {
@@ -1463,7 +1694,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         else {
             self.swipeLabel.text = "Dra uppåt för att svara!"
         }
-
+        
         UIView.animate(withDuration: 0.3, animations: {
             self.swipeBlurView.alpha = 0
             self.swipeView.center.y = self.startingSwipeViewY
@@ -1473,7 +1704,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
                 self.toggleViewIn()
             }
         }
-
+        
         self.swipeViewY = self.startingSwipeViewY
     }
     
@@ -1485,7 +1716,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         else {
             self.swipeLabel.text = "Sanning eller lögn?"
         }
-
+        
         UIView.animate(withDuration: 0.3, animations: {
             self.swipeBlurView.alpha = 1
             self.swipeView.center.y = self.view.center.y
@@ -1530,9 +1761,6 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             self.lieButtonOutlet.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
             self.trueButtonOutlet.transform = .identity
         }
-        
-        
-        
     }
     
     func radians (_ degrees: Double)-> CGFloat {
@@ -1550,6 +1778,15 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         UIView.animate(withDuration: 0.7, animations: {
             self.swipeUpButton.transform = .identity
         }, completion: nil)
+    }
+    
+    
+    @IBAction func exclamationMarkButtonInSwipeView(_ sender: UIButton) {
+        self.alertViewVarible = AlertViewChoice.other
+        self.textViewInAlertView.text = "Lagets medlemmar har givit olika svar. För att komma vidare behöver ni komma överrens om ett gemensamt svar inom laget"
+        UIView.animate(withDuration: 0.5) {
+            self.alertViewOutlet.transform = .identity
+        }
     }
     
     
@@ -1574,7 +1811,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     
     
-    //TODO: Fixa dom tre settings knapparna
+    
     @IBAction func restartGameButton(_ sender: UIButton) {
         self.settingsVar = 0
         self.openAreYouSureView()
@@ -1699,7 +1936,7 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             self.performSegue(withIdentifier: "quitGameSegue", sender: self)
         }
             
-            //TODO: Kick players
+            
         else if settingsVar == 2 {
             if let playerToKick = playerToKick{
                 PLAYER_REF.child(playerToKick.name).removeValue()
@@ -1744,17 +1981,29 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     
     //ALERT VIEW
-    var alertViewVarible = 0
+    var alertViewVarible: AlertViewChoice!
     
     @IBOutlet weak var alertViewOutlet: UIViewX!
     @IBOutlet weak var okInAlertViewButtonOutlet: UIButtonX!
     @IBOutlet weak var textViewInAlertView: UITextView!
     @IBAction func okButtonInAlertViewPressed(_ sender: UIButton) {
-        if alertViewVarible == 0 {
+        
+        switch self.alertViewVarible {
+        case .restart:
             self.performSegue(withIdentifier: "backToWait", sender: self)
-        }
-        else if alertViewVarible >= 1 {
+            return
+        case .quit:
             self.performSegue(withIdentifier: "quitGameSegue", sender: self)
+            return
+        case .other:
+            UIView.animate(withDuration: 0.5) {
+                self.alertViewOutlet.transform = CGAffineTransform(scaleX: 0, y: 0)
+                return
+            }
+        case .none:
+            return
+        case .some(let some):
+            print(some)
         }
     }
     
@@ -1813,8 +2062,17 @@ class GameLobby: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     
+}
+
+
+
+enum AlertViewChoice {
+    case restart
+    case quit
+    case other
     
 }
+
 
 
 

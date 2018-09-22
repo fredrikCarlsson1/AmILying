@@ -12,6 +12,7 @@
 		5C090622210762720068369D /* MultiPlayerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C090621210762720068369D /* MultiPlayerCollectionViewCell.swift */; };
 		5C090624210775090068369D /* InnerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C090623210775090068369D /* InnerCollectionViewCell.swift */; };
 		5C09062821198F5F0068369D /* RulesAndTips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C09062721198F5F0068369D /* RulesAndTips.swift */; };
+		5C2186E221429D9D000C7D20 /* GameLobbyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2186E121429D9D000C7D20 /* GameLobbyViewModel.swift */; };
 		5C265EDA20974AF3002442FE /* GameLobbyHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C265ED920974AF3002442FE /* GameLobbyHeaderCell.swift */; };
 		5C265EDD20974B2D002442FE /* GameLobbyTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C265EDC20974B2D002442FE /* GameLobbyTableCell.swift */; };
 		5C2A5B1520EA289C009ACC7D /* SingleGameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A5B1420EA289C009ACC7D /* SingleGameCell.swift */; };
@@ -35,7 +36,7 @@
 		5C80C31B2091029700BF1EC1 /* UISliderX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C80C3112091029600BF1EC1 /* UISliderX.swift */; };
 		5C8CABFD20911A7000080001 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8CABFC20911A7000080001 /* Player.swift */; };
 		5C8CAC02209497C800080001 /* JoinDirectly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8CAC01209497C800080001 /* JoinDirectly.swift */; };
-		5C8CAC0920967C8900080001 /* GameLobby.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8CAC0820967C8900080001 /* GameLobby.swift */; };
+		5C8CAC0920967C8900080001 /* GameLobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C8CAC0820967C8900080001 /* GameLobbyViewController.swift */; };
 		5CAA9CDC208F58400089FC0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA9CDB208F58400089FC0B /* AppDelegate.swift */; };
 		5CAA9CDE208F58400089FC0B /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CAA9CDD208F58400089FC0B /* StartView.swift */; };
 		5CAA9CE1208F58400089FC0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CAA9CDF208F58400089FC0B /* Main.storyboard */; };
@@ -71,6 +72,7 @@
 		5C090621210762720068369D /* MultiPlayerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiPlayerCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C090623210775090068369D /* InnerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InnerCollectionViewCell.swift; sourceTree = "<group>"; };
 		5C09062721198F5F0068369D /* RulesAndTips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesAndTips.swift; sourceTree = "<group>"; };
+		5C2186E121429D9D000C7D20 /* GameLobbyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLobbyViewModel.swift; sourceTree = "<group>"; };
 		5C265ED920974AF3002442FE /* GameLobbyHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLobbyHeaderCell.swift; sourceTree = "<group>"; };
 		5C265EDC20974B2D002442FE /* GameLobbyTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameLobbyTableCell.swift; sourceTree = "<group>"; };
 		5C2A5B1420EA289C009ACC7D /* SingleGameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleGameCell.swift; sourceTree = "<group>"; };
@@ -95,7 +97,7 @@
 		5C8CABFC20911A7000080001 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		5C8CAC0020927DED00080001 /* AmILying.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AmILying.entitlements; sourceTree = "<group>"; };
 		5C8CAC01209497C800080001 /* JoinDirectly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinDirectly.swift; sourceTree = "<group>"; };
-		5C8CAC0820967C8900080001 /* GameLobby.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLobby.swift; sourceTree = "<group>"; };
+		5C8CAC0820967C8900080001 /* GameLobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLobbyViewController.swift; sourceTree = "<group>"; };
 		5CAA9CD8208F58400089FC0B /* AmILying.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmILying.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CAA9CDB208F58400089FC0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CAA9CDD208F58400089FC0B /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -147,7 +149,8 @@
 		5C265EDB20974B00002442FE /* GameLobby */ = {
 			isa = PBXGroup;
 			children = (
-				5C8CAC0820967C8900080001 /* GameLobby.swift */,
+				5C8CAC0820967C8900080001 /* GameLobbyViewController.swift */,
+				5C2186E121429D9D000C7D20 /* GameLobbyViewModel.swift */,
 				5C265ED920974AF3002442FE /* GameLobbyHeaderCell.swift */,
 				5C265EDC20974B2D002442FE /* GameLobbyTableCell.swift */,
 				5C78388E20D1201B006214B3 /* AvatarCollectionCell.swift */,
@@ -522,6 +525,7 @@
 				5C80C304208F8B4300BF1EC1 /* ViewControllerExtension.swift in Sources */,
 				5C80C3162091029700BF1EC1 /* UIViewAnchorPoint.swift in Sources */,
 				5C8CAC02209497C800080001 /* JoinDirectly.swift in Sources */,
+				5C2186E221429D9D000C7D20 /* GameLobbyViewModel.swift in Sources */,
 				5C80C3182091029700BF1EC1 /* UIImageViewX.swift in Sources */,
 				5C78388F20D1201B006214B3 /* AvatarCollectionCell.swift in Sources */,
 				5CAA9D03208F5E6C0089FC0B /* WaitingForUsers.swift in Sources */,
@@ -530,7 +534,7 @@
 				5C80C3172091029700BF1EC1 /* UIViewControllerX.swift in Sources */,
 				5CAA9D01208F5D480089FC0B /* JoinGame.swift in Sources */,
 				5CAA9CE4208F58400089FC0B /* AmILying.xcdatamodeld in Sources */,
-				5C8CAC0920967C8900080001 /* GameLobby.swift in Sources */,
+				5C8CAC0920967C8900080001 /* GameLobbyViewController.swift in Sources */,
 				5C8CABFD20911A7000080001 /* Player.swift in Sources */,
 				5C80C3132091029700BF1EC1 /* UITextFieldX.swift in Sources */,
 				5C80C3122091029700BF1EC1 /* UIViewXRadialGradient.swift in Sources */,

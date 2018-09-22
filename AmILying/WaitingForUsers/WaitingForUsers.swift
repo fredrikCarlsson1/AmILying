@@ -901,7 +901,7 @@ class WaitingForUsers: UIViewController, UITextFieldDelegate, UITextViewDelegate
         playerRef.removeObserver(withHandle: childRemovedHandler)
         playerRef.removeObserver(withHandle: childAddedHandler)
         
-        if let destination = segue.destination as? GameLobby{
+        if let destination = segue.destination as? GameLobbyViewController{
             destination.gameID = gameID
             destination.numberOfTeams = numberOfTeams
             destination.playerID = playerID

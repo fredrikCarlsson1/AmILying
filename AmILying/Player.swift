@@ -18,6 +18,7 @@ class Player {
     var secrets: [String]?
     var answer: String
     var avatar: String
+    var isHost: Bool?
     
     init (key: String, name: String, points: Int, team: Int, answer: String, avatar: String, index: Int){
         self.key = key
